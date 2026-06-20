@@ -1,0 +1,26 @@
+# Dependencies
+website/node_modules/
+
+# Next.js build output
+website/.next/
+website/out/
+
+# Production build
+website/build/
+
+# Environment files
+website/.env
+website/.env.local
+website/.env.production
+.env*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Next.js generated types
+website/next-env.d.ts
