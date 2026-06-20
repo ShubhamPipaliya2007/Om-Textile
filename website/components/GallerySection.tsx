@@ -25,7 +25,7 @@ interface GalleryItem {
 const items: GalleryItem[] = [
   {
     id: "g1",
-    src: "https://picsum.photos/seed/bags-oxford-fabric/900/600",
+    src: "/gallery/oxford-weave-backpacks.jpg",
     title: "Oxford Weave Backpacks",
     subtitle: "High GSM · School & Travel",
     category: "Bag Fabrics",
@@ -33,7 +33,7 @@ const items: GalleryItem[] = [
   },
   {
     id: "g2",
-    src: "https://picsum.photos/seed/travel-bag-premium/600/700",
+    src: "/gallery/travel-bag.jpg",
     title: "Travel Bag Fabric",
     subtitle: "Water Resistant Coating",
     category: "Bag Fabrics",
@@ -41,7 +41,7 @@ const items: GalleryItem[] = [
   },
   {
     id: "g3",
-    src: "https://picsum.photos/seed/industrial-bag-fabric/600/600",
+    src: "/gallery/industrial-bag-applications.jpg",
     title: "Industrial Bag Applications",
     subtitle: "Ripstop · High Durability",
     category: "Bag Fabrics",
@@ -49,7 +49,7 @@ const items: GalleryItem[] = [
   },
   {
     id: "g4",
-    src: "https://picsum.photos/seed/car-seat-luxury/900/600",
+    src: "/gallery/luxury-car-seat-covers.jpg",
     title: "Luxury Car Seat Covers",
     subtitle: "OEM Grade · Premium Finish",
     category: "Automotive",
@@ -57,7 +57,7 @@ const items: GalleryItem[] = [
   },
   {
     id: "g5",
-    src: "https://picsum.photos/seed/bus-seat-fabric/600/600",
+    src: "/gallery/commercial-bus-seating.jpg",
     title: "Commercial Bus Seating",
     subtitle: "High Durability · Color Fast",
     category: "Automotive",
@@ -65,7 +65,7 @@ const items: GalleryItem[] = [
   },
   {
     id: "g6",
-    src: "https://picsum.photos/seed/truck-cab-interior/600/700",
+    src: "/gallery/truck-cabin-upholstery.jpg",
     title: "Truck Cabin Upholstery",
     subtitle: "Heavy Duty Fabric",
     category: "Automotive",
@@ -73,7 +73,7 @@ const items: GalleryItem[] = [
   },
   {
     id: "g7",
-    src: "https://picsum.photos/seed/sofa-curtain-furnish/900/600",
+    src: "/gallery/living-room-furnishing.jpg",
     title: "Living Room Furnishing",
     subtitle: "Elegant Sofa & Curtain Fabrics",
     category: "Furnishing",
@@ -81,7 +81,7 @@ const items: GalleryItem[] = [
   },
   {
     id: "g8",
-    src: "https://picsum.photos/seed/upholstery-cushion/600/700",
+    src: "/gallery/cushion-upholstery.jpg",
     title: "Cushion & Upholstery",
     subtitle: "Soft Feel · Long-lasting Color",
     category: "Furnishing",
@@ -89,7 +89,7 @@ const items: GalleryItem[] = [
   },
   {
     id: "g9",
-    src: "https://picsum.photos/seed/interior-curtain/600/600",
+    src: "/gallery/interior-decoration.jpg",
     title: "Interior Decoration",
     subtitle: "Modern & Traditional Designs",
     category: "Furnishing",
