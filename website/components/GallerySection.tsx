@@ -19,7 +19,7 @@ interface GalleryItem {
   title: string;
   subtitle: string;
   category: Exclude<Category, "All">;
-  span?: "wide" | "tall" | "normal";
+  height: number;
 }
 
 const items: GalleryItem[] = [
@@ -29,7 +29,7 @@ const items: GalleryItem[] = [
     title: "Oxford Weave Backpacks",
     subtitle: "High GSM · School & Travel",
     category: "Bag Fabrics",
-    span: "wide",
+    height: 320,
   },
   {
     id: "g2",
@@ -37,7 +37,7 @@ const items: GalleryItem[] = [
     title: "Travel Bag Fabric",
     subtitle: "Water Resistant Coating",
     category: "Bag Fabrics",
-    span: "tall",
+    height: 240,
   },
   {
     id: "g3",
@@ -45,7 +45,7 @@ const items: GalleryItem[] = [
     title: "Industrial Bag Applications",
     subtitle: "Ripstop · High Durability",
     category: "Bag Fabrics",
-    span: "normal",
+    height: 280,
   },
   {
     id: "g4",
@@ -53,7 +53,7 @@ const items: GalleryItem[] = [
     title: "Luxury Car Seat Covers",
     subtitle: "OEM Grade · Premium Finish",
     category: "Automotive",
-    span: "wide",
+    height: 260,
   },
   {
     id: "g5",
@@ -61,7 +61,7 @@ const items: GalleryItem[] = [
     title: "Commercial Bus Seating",
     subtitle: "High Durability · Color Fast",
     category: "Automotive",
-    span: "normal",
+    height: 320,
   },
   {
     id: "g6",
@@ -69,7 +69,7 @@ const items: GalleryItem[] = [
     title: "Truck Cabin Upholstery",
     subtitle: "Heavy Duty Fabric",
     category: "Automotive",
-    span: "tall",
+    height: 240,
   },
   {
     id: "g7",
@@ -77,7 +77,7 @@ const items: GalleryItem[] = [
     title: "Living Room Furnishing",
     subtitle: "Elegant Sofa & Curtain Fabrics",
     category: "Furnishing",
-    span: "wide",
+    height: 280,
   },
   {
     id: "g8",
@@ -85,7 +85,7 @@ const items: GalleryItem[] = [
     title: "Cushion & Upholstery",
     subtitle: "Soft Feel · Long-lasting Color",
     category: "Furnishing",
-    span: "tall",
+    height: 320,
   },
   {
     id: "g9",
@@ -93,7 +93,7 @@ const items: GalleryItem[] = [
     title: "Interior Decoration",
     subtitle: "Modern & Traditional Designs",
     category: "Furnishing",
-    span: "normal",
+    height: 260,
   },
 ];
 
@@ -105,8 +105,7 @@ const categoryColors: Record<Exclude<Category, "All">, string> = {
   "Furnishing": "#a16207",
 };
 
-/* Tilt card hook */
-function useTilt(strength = 8) {
+function useTilt(strength = 6) {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [strength, -strength]), { stiffness: 200, damping: 20 });
@@ -129,30 +128,20 @@ function GalleryCard({ item, index }: { item: GalleryItem; index: number }) {
   const { rotateX, rotateY, onMouseMove, onMouseLeave } = useTilt(5);
   const accent = categoryColors[item.category];
 
-  const spanClass =
-    item.span === "wide"
-      ? "col-span-2"
-      : item.span === "tall"
-      ? "row-span-2"
-      : "";
-
-  const imgHeight =
-    item.span === "wide" ? 340 : item.span === "tall" ? 520 : 280;
-
   return (
     <motion.div
-      className={`relative overflow-hidden rounded-2xl cursor-pointer group ${spanClass}`}
+      className="relative overflow-hidden rounded-2xl cursor-pointer group w-full mb-4 break-inside-avoid"
       style={{ rotateX, rotateY, transformStyle: "preserve-3d", perspective: 1000 }}
-      initial={{ opacity: 0, y: 40, scale: 0.94 }}
+      initial={{ opacity: 0, y: 30, scale: 0.95 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.92, y: 20 }}
-      transition={{ duration: 0.55, delay: index * 0.07, ease: "easeOut" as const }}
+      exit={{ opacity: 0, scale: 0.93, y: 16 }}
+      transition={{ duration: 0.5, delay: index * 0.06, ease: "easeOut" as const }}
       onMouseMove={onMouseMove}
       onMouseLeave={() => { onMouseLeave(); setHovered(false); }}
       onMouseEnter={() => setHovered(true)}
     >
-      {/* Image */}
-      <div className="relative w-full overflow-hidden" style={{ height: imgHeight }}>
+      <div className="relative w-full overflow-hidden" style={{ height: item.height }}>
+        {/* Photo with zoom */}
         <motion.div
           className="w-full h-full"
           animate={{ scale: hovered ? 1.08 : 1 }}
@@ -167,10 +156,10 @@ function GalleryCard({ item, index }: { item: GalleryItem; index: number }) {
           />
         </motion.div>
 
-        {/* Base gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/15 to-transparent" />
 
-        {/* Weave texture overlay for theme consistency */}
+        {/* Weave texture */}
         <div
           className="absolute inset-0 opacity-20"
           style={{
@@ -179,20 +168,20 @@ function GalleryCard({ item, index }: { item: GalleryItem; index: number }) {
           }}
         />
 
-        {/* Hover accent overlay */}
+        {/* Colour tint on hover */}
         <motion.div
           className="absolute inset-0"
-          style={{ background: `${accent}` }}
+          style={{ background: accent }}
           animate={{ opacity: hovered ? 0.12 : 0 }}
-          transition={{ duration: 0.35 }}
+          transition={{ duration: 0.3 }}
         />
 
-        {/* Category chip — top left */}
+        {/* Category chip */}
         <motion.div
           className="absolute top-3 left-3"
           initial={{ opacity: 0, x: -8 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: index * 0.07 + 0.3 }}
+          transition={{ delay: index * 0.06 + 0.25 }}
         >
           <span
             className="text-[10px] font-semibold tracking-[0.25em] uppercase px-2.5 py-1 rounded-full backdrop-blur-md"
@@ -206,7 +195,7 @@ function GalleryCard({ item, index }: { item: GalleryItem; index: number }) {
           </span>
         </motion.div>
 
-        {/* Bottom content */}
+        {/* Caption */}
         <div className="absolute bottom-0 left-0 right-0 p-5">
           <motion.p
             className="text-white/50 text-[10px] tracking-widest uppercase mb-1"
@@ -218,8 +207,6 @@ function GalleryCard({ item, index }: { item: GalleryItem; index: number }) {
           <h3 className="font-display text-white text-xl font-semibold leading-tight">
             {item.title}
           </h3>
-
-          {/* Hover underline */}
           <motion.div
             className="h-0.5 mt-2 rounded-full"
             style={{ background: accent }}
@@ -228,11 +215,11 @@ function GalleryCard({ item, index }: { item: GalleryItem; index: number }) {
           />
         </div>
 
-        {/* Corner shine on hover */}
+        {/* Corner shine */}
         <motion.div
-          className="absolute top-0 left-0 w-full h-full pointer-events-none"
+          className="absolute inset-0 pointer-events-none"
           style={{
-            background: "linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 50%)",
+            background: "linear-gradient(135deg, rgba(255,255,255,0.07) 0%, transparent 50%)",
           }}
           animate={{ opacity: hovered ? 1 : 0 }}
           transition={{ duration: 0.35 }}
@@ -276,7 +263,7 @@ export default function GallerySection() {
           </p>
         </motion.div>
 
-        {/* Category filter tabs */}
+        {/* Category filter */}
         <motion.div
           className="flex flex-wrap justify-center gap-2 mb-10"
           initial={{ opacity: 0, y: 16 }}
@@ -288,9 +275,7 @@ export default function GallerySection() {
               key={cat}
               onClick={() => setActive(cat)}
               className="relative px-5 py-2 rounded-full text-sm font-medium transition-colors duration-300"
-              style={{
-                color: active === cat ? "white" : "#a8a29e",
-              }}
+              style={{ color: active === cat ? "white" : "#a8a29e" }}
             >
               {active === cat && (
                 <motion.div
@@ -304,11 +289,11 @@ export default function GallerySection() {
           ))}
         </motion.div>
 
-        {/* Masonry grid */}
+        {/* Masonry columns — no gaps */}
         <AnimatePresence mode="wait">
           <motion.div
             key={active}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-auto"
+            className="columns-1 sm:columns-2 lg:columns-3 gap-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -320,7 +305,7 @@ export default function GallerySection() {
           </motion.div>
         </AnimatePresence>
 
-        {/* Bottom CTA */}
+        {/* CTA */}
         <motion.div
           className="text-center mt-12"
           initial={{ opacity: 0, y: 16 }}
